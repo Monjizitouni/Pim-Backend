@@ -1,0 +1,4 @@
+{
+    "connectionString": "mongodb://localhost/esprit_kpi",
+    "secret": "EspritKPI"
+}
