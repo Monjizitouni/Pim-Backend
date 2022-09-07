@@ -9,22 +9,26 @@ module.exports = {
     create,
     update,
     delete: _delete,
-    getByEtudiantMat
+    getByEtudiantMat,
+    getByEtudiantMatABS
 };
 
 async function getAll() {
-    return await Presence.find().populate({path:'etudiant'}).populate({path:'matiere'});
+    return await Presence.find().populate({path:'Etudiant'}).populate({path:'matiere'});
 }
 
 
 async function getById(id) {
-    return await Presence.findById(id).populate({path:'etudiant'}).populate({path:'matiere'});
+    return await Presence.findById(id).populate({path:'Etudiant'}).populate({path:'matiere'});
 }
 
 async function getByEtudiantMat(etudiant , matiere ) {
-    return await Presence.find({NomEtudiant : etudiant , matiere : matiere }).populate({path:'student'}).populate({path:'matiere'});
+    return await Presence.find({NomEtudiant : etudiant , matiere : matiere }).populate({path:'NomEtudiant'}).populate({path:'matiere'});
 }
 
+async function getByEtudiantMatABS(etudiant , matiere ) {
+    return await Presence.find({NomEtudiant : etudiant , matiere : matiere, State : "ABS" }).populate({path:'NomEtudiant'}).populate({path:'matiere'});
+}
 
 
 

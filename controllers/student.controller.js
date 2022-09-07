@@ -14,6 +14,7 @@ router.get('/current', getCurrent);
 router.get('/classe/:classeId', getByClasse);
 router.get('/:id', getById);
 router.delete('/:id', _delete);
+router.post('/mailstudent', mailstudent);
 
 module.exports = router;
 
@@ -49,6 +50,43 @@ function register(req, res, next) {
         .then(student => student ? res.json(student): res.status(200).json({ message: 'sign up success' }))
         .catch(err => next(err));
 }
+
+function mailstudent(req, res, next){
+    
+    var recipientmail= req.body.mail
+    var subject= req.body.subject
+    console.log(recipientmail)
+    var fname=''
+    var nodemailer = require('nodemailer');
+    
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'CopyAndPasteSpotter@gmail.com',
+        pass: 'yoajpehdcsytcyds'
+      }
+    });
+    
+    var mailOptions = {
+      from: 'CopyAndPasteSpotter@gmail.com',
+      to: recipientmail,
+      subject: '[Note Notfication ]',
+      text: 'Your no'+subject,
+      
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent');
+        
+      }
+    });
+     //sendResponse(res, ResponseCodes.fileUploaded, files);
+    }
+
+
 
 function getAll(req, res, next) {
     const email = req.query.email;
