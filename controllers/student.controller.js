@@ -15,6 +15,7 @@ router.get('/classe/:classeId', getByClasse);
 router.get('/:id', getById);
 router.delete('/:id', _delete);
 router.post('/mailstudent', mailstudent);
+router.post('/mailstudentABS', mailstudentABS);
 
 module.exports = router;
 
@@ -71,7 +72,7 @@ function mailstudent(req, res, next){
       from: 'CopyAndPasteSpotter@gmail.com',
       to: recipientmail,
       subject: '[Note Notfication ]',
-      text: 'Your no'+subject,
+      text: 'Your note at'+subject+ ' is 0 so make a contact with your school administration to fix your problem',
       
     };
     
@@ -85,6 +86,40 @@ function mailstudent(req, res, next){
     });
      //sendResponse(res, ResponseCodes.fileUploaded, files);
     }
+    function mailstudentABS(req, res, next){
+    
+        var recipientmail= req.body.mail
+        var subject= req.body.subject
+        console.log(recipientmail)
+        var fname=''
+        var nodemailer = require('nodemailer');
+        
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'CopyAndPasteSpotter@gmail.com',
+            pass: 'yoajpehdcsytcyds'
+          }
+        });
+        
+        var mailOptions = {
+          from: 'CopyAndPasteSpotter@gmail.com',
+          to: recipientmail,
+          subject: '[Absence Notfication]',
+          text: 'Your Absence in the subject '+subject+' has passed 3 so make a contact with your school administration to fix your problem' ,
+          
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent');
+            
+          }
+        });
+         //sendResponse(res, ResponseCodes.fileUploaded, files);
+        }
 
 
 
