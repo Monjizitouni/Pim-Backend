@@ -3,6 +3,9 @@ const db = require("../models");
 const Subject = db.subject;
 const User = db.user;
 
+
+router.post('/mailteacher', mailteacher);
+
 exports.addSubjectToTeacher = async (req, res) => {
   
     const teacherId= req.body.teacherId;
@@ -101,5 +104,8 @@ exports.getTeacherById = (req, res) => {
         res.send(teacher)
       });
 };
+  
+  
+
 
 

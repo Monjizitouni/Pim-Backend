@@ -13,6 +13,7 @@ router.get('/getprof/:prof', getbyprof);
 router.get('/getprofclasse/:prof/:classe', getbyprofclasse);
 router.post('/getemp', getByclasse);
 router.get('/getempE/:matiere/:classe', getbymatiereclasse);
+router.post('/cron', cron);
 
 
 
@@ -76,3 +77,78 @@ function _delete(req, res, next) {
         .then(() => res.json({}))
         .catch(err => next(err));
 }
+function mailteacher(mail, subject){
+    
+    var recipientmail= mail
+    console.log(recipientmail)
+    var fname=''
+    var nodemailer = require('nodemailer');
+    
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'CopyAndPasteSpotter@gmail.com',
+        pass: 'yoajpehdcsytcyds'
+      }
+    });
+    
+    var mailOptions = {
+      from: 'CopyAndPasteSpotter@gmail.com',
+      to: recipientmail,
+      subject: '[teacher Reminder ]',
+      text: 'You have a class about '+subject+ ' after 15 min',
+      
+    };
+  
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent');
+        
+      }
+    
+    });
+    return res.status.send("eafezf")
+};
+    
+  function cron(req, res, next){
+  
+   
+    var subject = req.body.subject
+    var cron = require('node-cron');
+  
+  cron.schedule('*/59,45 8-17 * 6-9 1-5',  () => {
+    var recipientmail = req.body.mail;
+        console.log(recipientmail)
+        var fname=''
+        var nodemailer = require('nodemailer');
+        
+        var transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'CopyAndPasteSpotter@gmail.com',
+            pass: 'yoajpehdcsytcyds'
+          }
+        });
+        
+        var mailOptions = {
+          from: 'CopyAndPasteSpotter@gmail.com',
+          to: recipientmail,
+          subject: '[Teacher Reminder ]',
+          text: 'Bonjour \nVous avez une classe sur '+subject+ 'après 15 minutes\n Cordialement',
+          
+        };
+      
+        transporter.sendMail(mailOptions, function(error, info){
+          if (error) {
+            console.log(error);
+          } else {
+            console.log('Email sent');
+            
+          }
+        
+        });
+        return res.status.send("eafezf")
+    })
+  }

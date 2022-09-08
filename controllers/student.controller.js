@@ -71,8 +71,8 @@ function mailstudent(req, res, next){
     var mailOptions = {
       from: 'CopyAndPasteSpotter@gmail.com',
       to: recipientmail,
-      subject: '[Note Notfication ]',
-      text: 'Your note at'+subject+ ' is 0 so make a contact with your school administration to fix your problem',
+      subject: '[Note Notfication]',
+      text: 'Bonjour \n Votre note dans la matière'+subject+ ' est 0 . Contactez administration pour résoudre votre problème \n Cordialement',
       
     };
     
@@ -106,7 +106,7 @@ function mailstudent(req, res, next){
           from: 'CopyAndPasteSpotter@gmail.com',
           to: recipientmail,
           subject: '[Absence Notfication]',
-          text: 'Your Absence in the subject '+subject+' has passed 3 so make a contact with your school administration to fix your problem' ,
+          text: 'Bonjour \nVotre absence dans la matière '+subject+'a dépassé 3. contactez administration pour résoudre votre problème\n Cordialement' ,
           
         };
         
